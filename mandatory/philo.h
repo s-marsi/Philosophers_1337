@@ -16,7 +16,7 @@ typedef struct	s_data
     int             eat_goal;
     int             program_start;
     pthread_mutex_t *forks;
-    pthread_mutex_t *threads;
+    pthread_mutex_t *threads_mutex;
     pthread_t       *thread;
 }	t_data;
 typedef struct	s_philo
@@ -31,19 +31,19 @@ typedef struct	s_philo
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
 }	t_philo;
-void	ft_error(char *params, char *msg, int status);
+void	ft_error(char *msg, int status);
+void	clean_up(t_data **data, t_philo **philosophers, int flag);
+void    ft_free(t_philo **philosophers, int num_phil, int num_mutex);
+void	ft_msg(char *msg1, char *msg2, int arg1, int arg2);
 void	check_params(int ac, char *av[]);
-// void	ft_is_digit(int ac, char *av[]);
-// size_t	ft_atoi(char *number);
-// void	initialize_fork(t_data *data, t_philo **philosophers);
-// void	lock_fork(t_philo *philosopher);
-// void	unlock_fork(t_philo *philosopher);
-// void	ft_eat(t_philo *philo);
-// void	ft_think(t_philo *philo);
-// void	ft_sleep(t_philo *philo);
-// int	    get_time(void);
-// void	ft_sleeping(int time_to_sleep);
-// void	ft_free(t_data *data, t_philo **philosophers);
-// void	uninitialize_fork(t_data *data);
-// void	uninitialize_thread(t_data *data);
+size_t	ft_atoi(char *number);
+int	    get_time(void);
+void	ft_sleeping(int time_to_sleep);
+void	initialize_data(t_data *data, int ac, char *av[]);
+t_philo	**create_philosophers(t_data *data);
+void	philos_status(t_data *data, t_philo **philosophers);
+void	ft_eat(t_philo *philo);
+void	ft_sleep(t_philo *philo);
+void	ft_think(t_philo *philo);
+void    uninitialize_rscs(t_data *data);
 # endif
