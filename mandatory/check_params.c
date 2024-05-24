@@ -37,7 +37,7 @@ void	check_params(int ac, char *av[])
 	if (ac != 5 && ac != 6)
 	{
 		msg = "params should be between 5 and 6.";
-		ft_error("%s\n", msg, 0);
+		ft_error(msg, 0);
 	}
 	is_valid_number(ac, av);
 }
