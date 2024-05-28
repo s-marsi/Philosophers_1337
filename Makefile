@@ -1,4 +1,4 @@
-CFLAGS = -Wall -Wextra -Werror   #-fsanitize=thread 
+CFLAGS = -Wall -Wextra -Werror   -fsanitize=thread 
 #-fsanitize=address 
 CC = cc
 
