@@ -1,16 +1,18 @@
 #include "philo.h"
 
-void	philos_status_helper(t_data *data, t_philo **philosophers, int flag)
+int	philos_status_helper(t_data *data, t_philo **philosophers, int flag)
 {
+	(void) philosophers;
     if (flag)
 	{
 		printf("%d ms all philo has eaten at least %d time \n", get_time() - data->program_start\
 		, data->eat_goal);
-		uninitialize_rscs(data);
-		ft_free(philosophers, data->num_philosophers, data->num_philosophers);
-		clean_up(&data, philosophers, 0);
-		exit (0) ;
+		pthread_mutex_lock(&data->state_mutex);
+		data->state = 1;
+		pthread_mutex_unlock(&data->state_mutex);
+		return (1);
 	}
+	return (0);
 }
 
 void	philos_status(t_data *data, t_philo **philosophers)
@@ -28,16 +30,17 @@ void	philos_status(t_data *data, t_philo **philosophers)
 			{
 				printf("%d ms %d died \n", get_time() - data->program_start\
 				,philosophers[i]->philosopher_id);
-				uninitialize_rscs(data);
-				ft_free(philosophers, data->num_philosophers, data->num_philosophers);
-				clean_up(&data, philosophers, 0);
-				exit (0);
+				pthread_mutex_lock(&data->state_mutex);
+				data->state = 1;
+				pthread_mutex_unlock(&data->state_mutex);
+				return ;
 			}
 			if (philosophers[i]->eat_times < philosophers[i]->philo_goal)
 				flag = 0;
 			pthread_mutex_unlock(philosophers[i]->eat_mutex);
 			i++;
 		}
-		philos_status_helper(data, philosophers, flag);
+		if (philos_status_helper(data, philosophers, flag))
+			return;
 	}
 }

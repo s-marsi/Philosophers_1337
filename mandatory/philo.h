@@ -15,8 +15,9 @@ typedef struct	s_data
     int             time_sleep;
     int             eat_goal;
     int             program_start;
+    int             state;
+    pthread_mutex_t state_mutex;
     pthread_mutex_t *forks;
-    pthread_mutex_t *threads_mutex;
     pthread_t       *thread;
 }	t_data;
 typedef struct	s_philo
@@ -42,7 +43,7 @@ void	ft_sleeping(int time_to_sleep);
 void	initialize_data(t_data *data, int ac, char *av[]);
 t_philo	**create_philosophers(t_data *data);
 void	philos_status(t_data *data, t_philo **philosophers);
-void	ft_eat(t_philo *philo);
+int	    ft_eat(t_philo *philo);
 void	ft_sleep(t_philo *philo);
 void	ft_think(t_philo *philo);
 void    uninitialize_rscs(t_data *data);

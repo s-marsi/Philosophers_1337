@@ -20,8 +20,7 @@ static t_philo	**allocate_phil_rsc(t_data **data)
 	philosophers = malloc((*data)->num_philosophers * sizeof(t_philo));
 	(*data)->thread = malloc((*data)->num_philosophers * sizeof(pthread_t));
 	(*data)->forks = malloc((*data)->num_philosophers * sizeof(pthread_mutex_t));
-	(*data)->threads_mutex = malloc((*data)->num_philosophers * sizeof(pthread_mutex_t));
-	if (!philosophers || !(*data)->thread || !(*data)->forks || !(*data)->threads_mutex)
+	if (!philosophers || !(*data)->thread || !(*data)->forks)
 		clean_up(data, philosophers, 1);
 	return (philosophers);
 }
@@ -47,6 +46,7 @@ void	initialize_data(t_data *data, int ac, char *av[])
 	}
 	else
 		data->eat_goal = -1;
+	data->state = 0;
 	data->program_start = get_time();
 }
 
@@ -73,7 +73,6 @@ void	create_philo_helper(t_data *data, t_philo **philos, int i)
 	philos[i]->last_eat = get_time();
 	philos[i]->num_philosophers = data->num_philosophers - 1;
 	pthread_mutex_init(philos[i]->eat_mutex, NULL);
-	pthread_mutex_init(&data->threads_mutex[i], NULL);
 }
 
 t_philo	**create_philosophers(t_data *data)
@@ -83,6 +82,7 @@ t_philo	**create_philosophers(t_data *data)
 
 	philos = allocate_phil_rsc(&data);
 	initialize_fork(data, philos);
+	pthread_mutex_init(&data->state_mutex, NULL);
 	i = 0;
 	while (i < data->num_philosophers)
 	{

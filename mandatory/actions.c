@@ -32,8 +32,15 @@ void	unlock_fork(t_philo *philo)
 	}
 }
 
-void	ft_eat(t_philo *philo)
+int	ft_eat(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->data->state_mutex);
+	if (philo->data->state)
+	{
+		pthread_mutex_unlock(&philo->data->state_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->data->state_mutex);
 	lock_fork(philo);
 	pthread_mutex_lock(philo->eat_mutex);
 	if (philo->eat_times >= 0)
@@ -43,15 +50,30 @@ void	ft_eat(t_philo *philo)
 	printf("%d ms %d is eating\n", get_time() - philo->data->program_start, philo->philosopher_id);
 	ft_sleeping(philo->data->time_eat);
 	unlock_fork(philo);
+	return (0);
 }
 
 void	ft_sleep(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->data->state_mutex);
+	if (philo->data->state)
+	{
+		pthread_mutex_unlock(&philo->data->state_mutex);
+		return ;
+	}
+	pthread_mutex_unlock(&philo->data->state_mutex);
 	printf("%d ms %d is sleeping\n", get_time() - philo->data->program_start, philo->philosopher_id);
 	ft_sleeping(philo->data->time_sleep);
 }
 
 void	ft_think(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->data->state_mutex);
+	if (philo->data->state)
+	{
+		pthread_mutex_unlock(&philo->data->state_mutex);
+		return ;
+	}
+	pthread_mutex_unlock(&philo->data->state_mutex);
 	printf("%d ms, %d is thinking\n", get_time() - philo->data->program_start, philo->philosopher_id);
 }

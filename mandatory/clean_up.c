@@ -17,11 +17,6 @@ void	clean_up(t_data **data, t_philo **philosophers, int flag)
 		free((*data)->forks);
 		(*data)->forks = NULL;
 	}
-	if ((*data)->threads_mutex)
-	{
-		free((*data)->threads_mutex);
-		(*data)->threads_mutex = NULL;
-	}
 	if (flag)
 	{
 		printf("error malloc.\n");
