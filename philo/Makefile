@@ -1,11 +1,11 @@
-CFLAGS = -Wall -Wextra -Werror   -fsanitize=thread 
+CFLAGS = -Wall -Wextra -Werror    #-fsanitize=thread 
 #-fsanitize=address 
 CC = cc
 
 NAME = philo
 
 SRC = mandatory/philo.c mandatory/errors.c mandatory/check_params.c mandatory/initialize_philos.c \
-	mandatory/helpers.c mandatory/philos_status.c mandatory/clean_up.c mandatory/actions.c mandatory/uninitialize.c
+	mandatory/helpers.c mandatory/philos_status.c mandatory/clean_up.c mandatory/actions/actions.c mandatory/actions/actions_helper.c mandatory/uninitialize.c
 
 OBJ = $(SRC:.c=.o)
 
