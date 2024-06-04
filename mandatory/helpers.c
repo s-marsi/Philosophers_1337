@@ -37,3 +37,14 @@ void	ft_sleeping(int time_to_sleep)
 		usleep(1);
 	}
 }
+int	check_state(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->state_mutex);
+	if (philo->data->state)
+	{
+		pthread_mutex_unlock(&philo->data->state_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->data->state_mutex);
+	return (0);
+}

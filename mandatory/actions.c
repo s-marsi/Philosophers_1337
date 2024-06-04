@@ -34,6 +34,19 @@ void	unlock_fork(t_philo *philo)
 
 int	ft_eat(t_philo *philo)
 {
+	if (philo->num_philosophers == 0)
+	{
+		pthread_mutex_lock(philo->right_fork);
+		printf("%d ms %d has taken a fork\n", get_time() - philo->data->program_start, philo->philosopher_id);
+		while (1)
+		{
+			if (check_state(philo))
+			{
+				pthread_mutex_unlock(philo->right_fork);
+				return (1);
+			}
+		}
+	}
 	pthread_mutex_lock(&philo->data->state_mutex);
 	if (philo->data->state)
 	{
