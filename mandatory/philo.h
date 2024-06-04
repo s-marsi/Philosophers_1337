@@ -47,4 +47,5 @@ int	    ft_eat(t_philo *philo);
 void	ft_sleep(t_philo *philo);
 void	ft_think(t_philo *philo);
 void    uninitialize_rscs(t_data *data);
+int	    check_state(t_philo *philo);
 # endif

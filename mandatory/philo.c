@@ -8,6 +8,13 @@ void	*actions_call(void *philosopher)
 	philo = (t_philo *) philosopher;
 	while (1)
 	{
+			pthread_mutex_lock(philo->eat_mutex);
+			if (philo->eat_times == philo->philo_goal)
+			{
+				pthread_mutex_unlock(philo->eat_mutex);
+				break ;
+			}
+			pthread_mutex_unlock(philo->eat_mutex);
 			if (ft_eat(philo) == 1)
 				return (NULL);
 			ft_sleep(philo);
