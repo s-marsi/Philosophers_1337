@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 13:06:54 by smarsi            #+#    #+#             */
-/*   Updated: 2024/06/04 14:21:21 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/06/05 12:29:44 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	lock_fork(t_philo *philo)
 {
-	if (philo->philosopher_id == philo->num_philosophers)
+	if (philo->philosopher_id % 2 != 0)
 	{
 		if (lock_1(philo))
 			return (1);

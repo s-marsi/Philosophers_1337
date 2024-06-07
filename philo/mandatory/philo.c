@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 14:38:21 by smarsi            #+#    #+#             */
-/*   Updated: 2024/06/04 16:26:07 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/06/05 10:47:53 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	philosopher_life(t_data *data, t_philo **philosophers)
 	while (i < data->num_philosophers)
 	{
 		pthread_create(&data->thread[i], NULL, actions_call, philosophers[i]);
-		usleep(50);
+		usleep(100);
 		i++;
 	}
 	philos_status(data, philosophers);
