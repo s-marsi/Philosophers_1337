@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 14:29:06 by smarsi            #+#    #+#             */
-/*   Updated: 2024/06/04 14:45:37 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/06/05 10:51:09 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ void	philos_status(t_data *data, t_philo **philosophers)
 				pthread_mutex_unlock(philosophers[i]->eat_mutex);
 				return ;
 			}
+			pthread_mutex_unlock(philosophers[i]->eat_mutex);
 			if (time_eat > data->time_die)
 			{
 				set_state(data, philosophers[i]);
 				return ;
 			}
-			pthread_mutex_unlock(philosophers[i]->eat_mutex);
 			i++;
 		}
 	}

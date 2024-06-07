@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 14:42:41 by smarsi            #+#    #+#             */
-/*   Updated: 2024/06/04 15:37:35 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/06/05 10:41:42 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	is_valid_number(int ac, char *av[])
 			exit(0);
 		}
 		else if (av[i][j] == '+')
-			i++;
+			j++;
 		while (av[i][j])
 		{
 			if (av[i][j] < '0' || av[i][j] > '9')
