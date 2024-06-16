@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 14:38:21 by smarsi            #+#    #+#             */
-/*   Updated: 2024/06/05 10:47:53 by smarsi           ###   ########.fr       */
+/*   Created: 2024/06/16 11:47:45 by smarsi            #+#    #+#             */
+/*   Updated: 2024/06/16 12:27:56 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,11 @@ int	main(int ac, char *av[])
 	t_data	data;
 	t_philo	**philos;
 
-	check_params(ac, av);
-	initialize_data(&data, ac, av);
+	if (check_params(ac, av) || initialize_data(&data, ac, av))
+		return (1);
 	philos = create_philosophers(&data);
+	if (!philos)
+		return (1);
 	philosopher_life(&data, philos);
 	return (0);
 }

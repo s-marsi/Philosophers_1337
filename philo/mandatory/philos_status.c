@@ -6,16 +6,14 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 14:29:06 by smarsi            #+#    #+#             */
-/*   Updated: 2024/06/05 10:51:09 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/06/16 14:24:20 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	philos_status_helper(t_data *data, t_philo *philo, int flag)
+int	philos_status_helper(t_data *data, int flag)
 {
-	if (philo->eat_times < philo->philo_goal)
-		flag = 0;
 	if (flag)
 	{
 		pthread_mutex_lock(&data->state_mutex);
@@ -50,11 +48,8 @@ void	philos_status(t_data *data, t_philo **philosophers)
 		{
 			pthread_mutex_lock(philosophers[i]->eat_mutex);
 			time_eat = (get_time() - philosophers[i]->last_eat);
-			if (philos_status_helper(data, philosophers[i], flag))
-			{
-				pthread_mutex_unlock(philosophers[i]->eat_mutex);
-				return ;
-			}
+			if (philosophers[i]->eat_times < philosophers[i]->philo_goal)
+				flag = 0;
 			pthread_mutex_unlock(philosophers[i]->eat_mutex);
 			if (time_eat > data->time_die)
 			{
@@ -63,5 +58,7 @@ void	philos_status(t_data *data, t_philo **philosophers)
 			}
 			i++;
 		}
+		if (philos_status_helper(data, flag))
+			return ;
 	}
 }

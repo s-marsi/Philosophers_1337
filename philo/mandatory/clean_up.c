@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 14:42:55 by smarsi            #+#    #+#             */
-/*   Updated: 2024/06/04 14:43:04 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/06/16 12:10:36 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,5 @@ void	clean_up(t_data **data, t_philo **philosophers, int flag)
 		(*data)->forks = NULL;
 	}
 	if (flag)
-	{
 		printf("error malloc.\n");
-		exit(1);
-	}
 }
