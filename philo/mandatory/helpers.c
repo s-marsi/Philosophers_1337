@@ -6,11 +6,31 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 14:41:21 by smarsi            #+#    #+#             */
-/*   Updated: 2024/06/05 07:52:34 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/06/16 12:32:40 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_free(t_philo **philosophers, int num_phil, int num_mutex)
+{
+	int	i;
+
+	if (philosophers == NULL)
+		return ;
+	i = 0;
+	while (i < num_phil)
+	{
+		if (i < num_mutex)
+		{
+			free(philosophers[i]->eat_mutex);
+			philosophers[i]->eat_mutex = NULL;
+		}
+		free(philosophers[i]);
+		philosophers[i] = NULL;
+		i++;
+	}
+}
 
 int	get_time(void)
 {

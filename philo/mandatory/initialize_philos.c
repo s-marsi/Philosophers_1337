@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 14:39:18 by smarsi            #+#    #+#             */
-/*   Updated: 2024/06/05 08:13:36 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/06/16 12:32:54 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,22 @@ static t_philo	**allocate_phil_rsc(t_data **data)
 	(*data)->forks = malloc((*data)->num_philosophers * \
 	sizeof(pthread_mutex_t));
 	if (!philosophers || !(*data)->thread || !(*data)->forks)
+	{
 		clean_up(data, philosophers, 1);
+		return (NULL);
+	}
 	return (philosophers);
 }
 
-void	initialize_data(t_data *data, int ac, char *av[])
+
+int	initialize_data(t_data *data, int ac, char *av[])
 {
 	data->num_philosophers = ft_atoi(av[1]);
 	if (!data->num_philosophers)
-		ft_error("num of philo should be more that 0.\n", 0);
+	{
+		write(2, "num of philo should be more that 0.\n", 37);
+		return (1);
+	}
 	data->time_die = ft_atoi(av[2]);
 	data->time_eat = ft_atoi(av[3]);
 	data->time_sleep = ft_atoi(av[4]);
@@ -54,16 +61,17 @@ void	initialize_data(t_data *data, int ac, char *av[])
 		{
 			printf("%d ms all philo has eaten at least %d time \n"\
 			, 0, data->eat_goal);
-			exit (0);
+			return (1);
 		}
 	}
 	else
 		data->eat_goal = -1;
 	data->state = 0;
 	data->program_start = get_time();
+	return (0);
 }
 
-void	create_philo_helper(t_data *data, t_philo **philos, int i)
+int	create_philo_helper(t_data *data, t_philo **philos, int i)
 {
 	philos[i]->philo_goal = data->eat_goal;
 	if (data->eat_goal == -1)
@@ -81,11 +89,13 @@ void	create_philo_helper(t_data *data, t_philo **philos, int i)
 	{
 		ft_free(philos, data->num_philosophers, i);
 		clean_up(&data, philos, 1);
+		return (1);
 	}
 	philos[i]->data = data;
 	philos[i]->last_eat = get_time();
 	philos[i]->num_philosophers = data->num_philosophers - 1;
 	pthread_mutex_init(philos[i]->eat_mutex, NULL);
+	return (0);
 }
 
 t_philo	**create_philosophers(t_data *data)
@@ -94,6 +104,8 @@ t_philo	**create_philosophers(t_data *data)
 	int		i;
 
 	philos = allocate_phil_rsc(&data);
+	if (!philos)
+		return (NULL);
 	initialize_fork(data, philos);
 	pthread_mutex_init(&data->state_mutex, NULL);
 	i = 0;
@@ -104,8 +116,10 @@ t_philo	**create_philosophers(t_data *data)
 		{
 			ft_free(philos, data->num_philosophers, 0);
 			clean_up(&data, philos, 1);
+			return (NULL);
 		}
-		create_philo_helper(data, philos, i);
+		if (create_philo_helper(data, philos, i))
+			return (NULL);
 		i++;
 	}
 	return (philos);
