@@ -33,6 +33,11 @@ int ft_atoi(char *str)
 	while (str[i] && str[i] >= '0' && str[i] <= '9')
 	{
 		number = (number * 10) + (str[i] - '0');
+		if (number >= INT_MAX)
+		{
+			write(2, "very large number\n", 19);
+			return (-1);
+		}
 		i++; 
 	}
 	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
@@ -40,7 +45,7 @@ int ft_atoi(char *str)
 	if (str[i])
 	{
 		ft_putendl("number should content only digit", 2);
-		return (1);
+		return (-1);
 	}
-	return (0);
+	return (number);
 }
