@@ -1,11 +1,11 @@
-CFLAGS = -Wall -Wextra -Werror  -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror  -g3 -fsanitize=thread
 
 CC = cc 
 
 NAME = philo
 
-FILES = philo.c helpers/ft_putendl.c helpers/ft_atoi.c helpers/ft_isdigit.c \
-		helpers/clean_up.c helpers/ft_print.c
+FILES = philo.c routine.c initialize_data_philo.c philo_life.c\
+		helpers/ft_putendl.c helpers/ft_atoi.c helpers/ft_isdigit.c helpers/clean_up.c helpers/ft_print.c helpers/helper.c\
 
 FILES_O = $(FILES:.c=.o) 
 
