@@ -19,7 +19,6 @@ int	actions(t_philo *philo)
 	int	time_eat;
 	int	time_sleep;
 
-	philo->last_eat = my_get_time();
 	pthread_mutex_lock(&philo->eat_mutex);
 	time_eat = philo->data->time_to_eat;
 	time_sleep = philo->data->time_to_sleep;
@@ -33,6 +32,7 @@ int	actions(t_philo *philo)
 	}
 	else
 		printf("%d ms %d is eating\n", my_get_time() - philo->data->time_start, philo->id);
+	philo->last_eat = my_get_time();
 	pthread_mutex_unlock(&philo->data->die_mutex);
 	ft_sleeping(time_eat);
 	philo->eaten_time++;
