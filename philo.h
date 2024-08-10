@@ -47,6 +47,7 @@ void    ft_print(t_data data, t_philo **philos);
 void	ft_free(t_philo **philos, int num_phil);
 int		my_get_time(void);
 void	ft_sleeping(int time_to_sleep);
+int		check_philos(t_data *data, t_philo *philo);
 void	*routine(void *philosopher);
 int		initialize_data(t_data *data, int ac, char *av[]);
 t_philo	**create_philos(t_data *data);
