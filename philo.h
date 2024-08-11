@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:44:52 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/10 18:55:27 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/11 12:05:00 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	clean_up(t_data **data, t_philo **philos, int flag);
 void	ft_print(t_data data, t_philo **philos);
 void	ft_free(t_philo **philos, int num_phil);
 int		my_get_time(void);
-void	ft_sleeping(int time_to_sleep);
+void	ft_sleeping(t_philo *philo, int time_to_sleep);
 int		check_philos(t_data *data, t_philo *philo);
 void	*routine(void *philosopher);
 int		initialize_data(t_data *data, int ac, char *av[]);

@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:45:05 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/11 11:43:13 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/11 12:06:23 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ int	my_get_time(void)
 	return ((s_time.tv_sec * 1000) + (s_time.tv_usec / 1000));
 }
 
-void	ft_sleeping(int time_to_sleep)
+void	ft_sleeping(t_philo *philo, int time_to_sleep)
 {
 	int	current;
 
 	current = my_get_time();
-	while (1)
+	while (!check_philos(philo->data, philo))
 	{
 		if (current + time_to_sleep <= my_get_time())
 			break ;
-		usleep(1);
+		usleep(50);
 	}
 }
 
