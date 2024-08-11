@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   helper.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/10 18:45:05 by smarsi            #+#    #+#             */
+/*   Updated: 2024/08/11 11:43:13 by smarsi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../philo.h"
 
 int	my_get_time(void)
 {
-	struct timeval s_time;
+	struct timeval	s_time;
 
-	gettimeofday(&s_time , NULL);
+	gettimeofday(&s_time, NULL);
 	return ((s_time.tv_sec * 1000) + (s_time.tv_usec / 1000));
 }
 
@@ -31,7 +43,7 @@ int	check_philos(t_data *data, t_philo *philo)
 	}
 	pthread_mutex_unlock(&data->die_mutex);
 	pthread_mutex_lock(&data->die_mutex);
-	if (my_get_time() - philo->last_eat >= data->time_to_die)
+	if (my_get_time() - philo->last_eat > data->time_to_die)
 	{
 		printf("%d ms %d died\n", my_get_time() - data->time_start, philo->id);
 		data->is_die = philo->id;
