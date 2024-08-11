@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:44:46 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/11 11:41:41 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/11 12:05:15 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	actions(t_philo *philo)
 	pthread_mutex_unlock(&philo->eat_mutex);
 	if (lock_fork(philo))
 		return (1);
-	ft_sleeping(time_eat);
+	ft_sleeping(philo, time_eat);
 	philo->eaten_time++;
 	unlock_fork(philo);
 	if (check_philos(philo->data, philo))
@@ -69,7 +69,7 @@ int	actions(t_philo *philo)
 	else
 		printf("%d ms %d is sleeping\n", my_get_time() \
 		- philo->data->time_start, philo->id);
-	ft_sleeping(time_sleep);
+	ft_sleeping(philo, time_sleep);
 	if (check_philos(philo->data, philo))
 		return (1);
 	else
