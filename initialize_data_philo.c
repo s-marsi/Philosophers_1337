@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialize_data_philo.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/10 18:45:01 by smarsi            #+#    #+#             */
+/*   Updated: 2024/08/10 18:59:45 by smarsi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	initialize_data(t_data *data, int ac, char *av[])
@@ -6,7 +18,7 @@ int	initialize_data(t_data *data, int ac, char *av[])
 	data->num_philos = ft_atoi(av[1]);
 	if (data->num_philos == 0)
 	{
-		ft_putendl("num of philo should be more than 0", 2);
+		ft_putendl("The number of philosophers should be greater than 0.", 2);
 		return (1);
 	}
 	data->time_to_die = ft_atoi(av[2]);
@@ -32,7 +44,6 @@ int	initialize_data(t_data *data, int ac, char *av[])
 static int	initialize_philo(t_data *data, t_philo *philo, int i)
 {
 	pthread_mutex_init(&philo->eat_mutex, NULL);
-	
 	if (i == data->num_philos - 1)
 	{
 		philo->left_fork = &data->forks[0];
@@ -76,7 +87,7 @@ t_philo	**allocate_rsrs(t_data *data, t_philo **philos)
 t_philo	**create_philos(t_data *data)
 {
 	t_philo	**philos;
-	int	i;
+	int		i;
 
 	i = 0;
 	philos = NULL;

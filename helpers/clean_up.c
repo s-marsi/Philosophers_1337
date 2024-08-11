@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean_up.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/10 18:45:22 by smarsi            #+#    #+#             */
+/*   Updated: 2024/08/10 18:48:10 by smarsi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../philo.h"
 
 void	clean_up(t_data **data, t_philo **philos, int flag)
@@ -32,7 +44,6 @@ void	ft_free(t_philo **philos, int num_phil)
 	{
 		if (philos[i])
 		{
-			// free(philos[i]->eat_mutex);
 			free(philos[i]);
 			philos[i] = NULL;
 		}
