@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:44:52 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/11 12:30:13 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/22 15:53:18 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <limits.h>
-
+#define TRUE 1
 typedef struct s_data
 {
 	pthread_mutex_t	*forks;

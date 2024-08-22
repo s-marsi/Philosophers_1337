@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:45:19 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/10 18:47:28 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/22 09:04:10 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ static int	check_error(char *str, int *index)
 	i = *index;
 	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
-	if (str[i] == '-')
+	if (str[i] && str[i] == '-')
 	{
-		ft_putendl("number should be positive", 2);
+		if (str[i + 1] && ft_isdigit(str[i + 1]))
+			ft_putendl("number should be positive", 2);
+		else
+			ft_putendl("number should content only digit", 2);
 		return (1);
 	}
 	if (str[i] == '+')
@@ -40,7 +43,7 @@ int	ft_atoi(char *str)
 	number = 0;
 	i = 0;
 	if (check_error(str, &i))
-		return (1);
+		return (-1);
 	while (str[i] && str[i] >= '0' && str[i] <= '9')
 	{
 		number = (number * 10) + (str[i] - '0');
