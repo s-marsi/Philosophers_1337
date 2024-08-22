@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:44:39 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/11 12:26:38 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/22 16:26:34 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int ac, char *av[])
 	philos = NULL;
 	if (ac != 5 && ac != 6)
 	{
-		ft_putendl("args should be >= 5", 2);
+		ft_putendl("args should be between 5 and 6", 2);
 		return (1);
 	}
 	if (check_args(ac, av) || initialize_data(&data, ac, av))
@@ -44,8 +44,6 @@ int	main(int ac, char *av[])
 	if (!philos)
 		return (1);
 	philosophers_life(&data, philos);
-	if (data.is_die == -1)
-		printf("all philos eat at least %d time\n", data.eat_target);
 	data_tmp = &data;
 	(ft_free(philos, data.num_philos), clean_up(&data_tmp, philos, 0));
 	return (0);
