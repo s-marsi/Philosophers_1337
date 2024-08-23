@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:44:57 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/22 16:34:51 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/23 19:00:31 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	philosophers_status(t_data *data, t_philo **philos)
 	{
 		pthread_mutex_unlock(&data->finish_mutex);
 		i = 0;
-		while (philos[i])
+		while (i < data->num_philos)
 		{
 			pthread_mutex_lock(&data->finish_mutex);
 			if (my_get_time() - philos[i]->last_eat > data->time_to_die)
