@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:44:46 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/22 16:35:00 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/23 19:00:37 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	actions(t_philo *philo)
 		pthread_mutex_lock(&philo->data->finish_mutex);
 		philo->data->eat_finish++;
 		pthread_mutex_unlock(&philo->data->finish_mutex);
-		return (1);
 	}
 	ft_sleeping(philo, philo->data->time_to_eat);
 	unlock_fork(philo);
