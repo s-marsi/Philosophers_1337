@@ -6,13 +6,13 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:44:57 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/23 19:00:31 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/23 19:02:18 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philosophers_status(t_data *data, t_philo **philos)
+void	super_visor(t_data *data, t_philo **philos)
 {
 	int	i;
 
@@ -56,7 +56,7 @@ void	philosophers_life(t_data *data, t_philo **philos)
 		pthread_create(&data->threads[i], NULL, routine, philos[i]);
 		i++;
 	}
-	philosophers_status(data, philos);
+	super_visor(data, philos);
 	i = 0;
 	while (i < data->num_philos)
 	{
