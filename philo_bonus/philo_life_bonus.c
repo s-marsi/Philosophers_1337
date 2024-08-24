@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:44:57 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/17 11:25:07 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/24 12:45:42 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,17 @@ void	*philos_status(void	*philosopher)
 	sem_wait(data->finish_sem);
 	while (philo->eaten_time != philo->philo_goal)
 	{
-		sem_post(data->finish_sem);
-		sem_wait(data->die_sem);
-		if (data->is_die > 0)
+		if (my_get_time() - philo->last_eat > data->time_to_die)
 		{
+			sem_wait(data->die_sem);
+			data->is_die = 1;
 			sem_post(data->die_sem);
+			printf("%d %d died\n", my_get_time() - \
+			data->time_start, philo->id);
 			return (NULL);
 		}
-		sem_post(data->die_sem);
+		sem_post(data->finish_sem);
+		usleep(100);
 		sem_wait(data->finish_sem);
 	}
 	sem_post(data->finish_sem);
@@ -41,10 +44,9 @@ static void	philo_life_helper(t_data *data, int status)
 	int	i;
 
 	i = 0;
-	while (i < data->num_philos)
+	while (waitpid(-1, &status, 0) != -1)
 	{
-		waitpid(-1, &status, 0);
-		if (status > 0)
+		if (status != 0)
 		{
 			i = 0;
 			while (i < data->num_philos)
@@ -54,11 +56,8 @@ static void	philo_life_helper(t_data *data, int status)
 			}
 			return ;
 		}
-		if (status == 0)
-			i++;
+		i++;
 	}
-	printf("%d ms all philo has eaten at least %d time", my_get_time() - \
-	data->time_start, data->eat_target);
 }
 
 void	philosophers_life(t_data *data, t_philo **philos)

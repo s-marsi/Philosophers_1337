@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:44:39 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/15 11:10:46 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/24 12:21:18 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	main(int ac, char *av[])
 	if (!philos)
 		return (1);
 	philosophers_life(&data, philos);
+	sem_post(data.finish_sem);
 	(ft_free(philos, data.num_philos), clean_up(&data, philos, 0));
 	return (0);
 }
