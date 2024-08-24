@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:44:46 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/16 20:38:45 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/24 12:48:00 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,19 @@ int	lock_fork(t_philo *philo)
 	}
 	if (philo->num_philos == 1)
 	{
-		while (!check_philos(philo->data, philo))
-			;
+		ft_sleeping(philo, philo->data->time_start);
 		unlock_fork(philo);
 		return (1);
 	}
 	sem_wait(philo->data->forks);
-	if (print_msg(philo, "has taken fork"))
+	if (print_msg(philo, "has taken fork") || print_msg(philo, "is eating"))
 	{
 		unlock_fork(philo);
 		return (1);
 	}
-	printf("%d %d is eating\n", my_get_time() \
-	- philo->data->time_start, philo->id);
+	sem_wait(philo->data->finish_sem);
 	philo->last_eat = my_get_time();
+	sem_post(philo->data->finish_sem);
 	return (0);
 }
 
@@ -68,26 +67,26 @@ int	actions(t_philo *philo)
 	return (0);
 }
 
-void	ft_exit(t_philo **philos, t_philo *philo, t_data *data, int status)
-{
-	pthread_join(philo->thread, NULL);
-	(ft_free(philos, data->num_philos), clean_up(data, philos, 0));
-	exit (status);
-}
-
 void	*routine(t_philo **philos, t_philo *philo)
 {
 	t_data	*data;
 
 	pthread_create(&philo->thread, NULL, philos_status, philo);
 	data = philo->data;
+	if (philo->id % 2 == 0)
+		usleep(200);
 	while (philo->eaten_time != philo->philo_goal)
 	{
-		if (philo->id % 2 == 0)
-			usleep(1500);
 		if (actions(philo))
-			ft_exit (philos, philo, data, 1);
+		{
+			pthread_join(philo->thread, NULL);
+			(ft_free(philos, data->num_philos), clean_up(data, philos, 0));
+			exit (1);
+		}
+		usleep (700);
 	}
-	ft_exit (philos, philo, data, 0);
+	pthread_join(philo->thread, NULL);
+	(ft_free(philos, data->num_philos), clean_up(data, philos, 0));
+	exit (0);
 	return (NULL);
 }
