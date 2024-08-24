@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:44:57 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/24 12:45:42 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/24 12:53:19 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	philo_life_helper(t_data *data, int status)
 	i = 0;
 	while (waitpid(-1, &status, 0) != -1)
 	{
-		if (status != 0)
+		if (status != EXIT_ALIVE)
 		{
 			i = 0;
 			while (i < data->num_philos)

@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 13:42:28 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/24 12:50:45 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/24 13:00:41 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ int	initialize_semaphore(t_data *data)
 	sem_unlink("/finish_sem");
 	sem_unlink("/die_sem");
 	sem_unlink("/forks");
-	data->finish_sem = sem_open("/finish_sem", O_CREAT | O_EXCL, 0644, 1);
-	data->die_sem = sem_open("/die_sem", O_CREAT | O_EXCL, 0644, 1);
-	data->forks = sem_open("/forks", O_CREAT | O_EXCL, 0644, data->num_philos);
+	data->finish_sem = sem_open("/finish_sem", O_CREAT, 0644, 1);
+	data->die_sem = sem_open("/die_sem", O_CREAT, 0644, 1);
+	data->forks = sem_open("/forks", O_CREAT, 0644, data->num_philos);
 	if (data->finish_sem == SEM_FAILED || data->die_sem == SEM_FAILED
 		|| data->forks == SEM_FAILED)
 	{
