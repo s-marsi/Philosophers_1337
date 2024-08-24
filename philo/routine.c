@@ -6,11 +6,29 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:44:46 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/23 19:00:37 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/24 10:07:16 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	one_philo(t_philo *philo)
+{
+	if (philo->num_philos == 1)
+	{
+		while (!check_philos(philo->data))
+			;
+		pthread_mutex_unlock(philo->left_fork);
+		return (1);
+	}
+	return (0);
+}
+
+void	unlock_fork(t_philo *philo)
+{
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
+}
 
 int	lock_fork(t_philo *philo)
 {
@@ -20,34 +38,20 @@ int	lock_fork(t_philo *philo)
 		pthread_mutex_unlock(philo->left_fork);
 		return (1);
 	}
-	if (philo->num_philos == 1)
-	{
-		while (!check_philos(philo->data, philo))
-			;
-		pthread_mutex_unlock(philo->left_fork);
+	if (one_philo(philo))
 		return (1);
-	}
 	pthread_mutex_lock(philo->right_fork);
-	if (print_msg(philo, "has taken fork"))
+	if (print_msg(philo, "has taken fork") || print_msg(philo, "is eating"))
 	{
-		pthread_mutex_unlock(philo->left_fork);
-		if (philo->num_philos > 1)
-			pthread_mutex_unlock(philo->right_fork);
+		unlock_fork(philo);
 		return (1);
 	}
-	printf("%d %d is eating\n", my_get_time() \
-	- philo->data->time_start, philo->id);
-	pthread_mutex_lock(&philo->data->finish_mutex);
+	pthread_mutex_lock(&philo->eat_mutex);
 	philo->last_eat = my_get_time();
-	pthread_mutex_unlock(&philo->data->finish_mutex);
+	pthread_mutex_unlock(&philo->eat_mutex);
+	ft_sleeping(philo, philo->data->time_to_eat);
+	unlock_fork(philo);
 	return (0);
-}
-
-void	unlock_fork(t_philo *philo)
-{
-	pthread_mutex_unlock(philo->left_fork);
-	if (philo->num_philos > 1)
-		pthread_mutex_unlock(philo->right_fork);
 }
 
 int	actions(t_philo *philo)
@@ -61,8 +65,6 @@ int	actions(t_philo *philo)
 		philo->data->eat_finish++;
 		pthread_mutex_unlock(&philo->data->finish_mutex);
 	}
-	ft_sleeping(philo, philo->data->time_to_eat);
-	unlock_fork(philo);
 	if (print_msg(philo, "is sleeping"))
 		return (1);
 	ft_sleeping(philo, philo->data->time_to_sleep);
@@ -77,12 +79,12 @@ void	*routine(void *philosopher)
 
 	philo = (t_philo *) philosopher;
 	if (philo->id % 2 == 0)
-		usleep(400);
+		usleep(1000);
 	while (TRUE)
 	{
 		if (actions(philo))
 			return (NULL);
-		usleep(100);
+		usleep(500);
 	}
 	return (NULL);
 }

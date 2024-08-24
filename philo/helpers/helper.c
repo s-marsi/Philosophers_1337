@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:45:05 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/22 16:33:16 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/24 09:58:10 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	print_msg(t_philo *philo, char *msg)
 
 	data = philo->data;
 	pthread_mutex_lock(&data->finish_mutex);
-	if (check_philos(data, philo))
+	if (check_philos(data))
 	{
 		pthread_mutex_unlock(&data->finish_mutex);
 		return (1);
@@ -42,17 +42,16 @@ void	ft_sleeping(t_philo *philo, int time_to_sleep)
 	int	current;
 
 	current = my_get_time();
-	while (!check_philos(philo->data, philo))
+	while (!check_philos(philo->data))
 	{
 		if ((current + time_to_sleep) <= my_get_time())
 			break ;
-		usleep(50);
+		usleep(500);
 	}
 }
 
-int	check_philos(t_data *data, t_philo *philo)
+int	check_philos(t_data *data)
 {
-	(void) philo;
 	pthread_mutex_lock(&data->die_mutex);
 	if (data->is_die != 0)
 	{
