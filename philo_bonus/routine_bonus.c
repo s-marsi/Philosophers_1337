@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:44:46 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/24 12:48:00 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/24 12:53:04 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ void	*routine(t_philo **philos, t_philo *philo)
 		{
 			pthread_join(philo->thread, NULL);
 			(ft_free(philos, data->num_philos), clean_up(data, philos, 0));
-			exit (1);
+			exit (EXIT_DEAD);
 		}
 		usleep (700);
 	}
 	pthread_join(philo->thread, NULL);
 	(ft_free(philos, data->num_philos), clean_up(data, philos, 0));
-	exit (0);
+	exit (EXIT_ALIVE);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: smarsi <smarsi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 18:45:01 by smarsi            #+#    #+#             */
-/*   Updated: 2024/08/15 19:27:40 by smarsi           ###   ########.fr       */
+/*   Updated: 2024/08/24 13:01:35 by smarsi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,6 @@ static int	initialize_philo(t_data *data, t_philo *philo, int i)
 
 t_philo	**allocate_rsrs(t_data *data, t_philo **philos)
 {
-	int	i;
-
-	i = 0;
 	philos = malloc(data->num_philos * sizeof(t_philo));
 	data->p_ids = malloc(data->num_philos * sizeof(pid_t));
 	if (!philos || !data->p_ids)
